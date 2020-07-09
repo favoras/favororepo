@@ -8,9 +8,12 @@ class Lektuvas {
     {
         Random rand = new Random();
         int skaicius = rand.nextInt(10);
-        int bandom = 5 / skaicius;
-        System.out.println("OK: važiuoklė sėkmingai išskleista");
-
+        try {
+            int bandom = 5 / skaicius;
+            System.out.println("OK: važiuoklė sėkmingai išskleista - nusileidom");
+            } catch (ArithmeticException e) {
+            System.out.println("ERROR : nepavyko isskleisti vaziuokles - suduzom");
+        }
     }
 
 }

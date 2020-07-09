@@ -18,29 +18,52 @@ class VaziuoklesIsskleidimoKlaida extends Exception {
     }
 }
 
+class LaikinaKlaida extends VaziuoklesIsskleidimoKlaida{
+
+    public LaikinaKlaida(String priezastis) {
+        super(priezastis);
+    }
+}
+
+class SvarbiKlaida extends  VaziuoklesIsskleidimoKlaida{
+
+    public SvarbiKlaida(String priezastis) {
+        super(priezastis);
+    }
+}
+
 class Lektuvas {
 
     public void iskeistiVaziuokle() {
         try {
             vaziuokle();
             System.out.println("OK : važiuoklė sėkmingai išskleista");
-        } catch (VaziuoklesIsskleidimoKlaida e) { // divided by 0
-            System.out.println("ERROR : nepavyko isskleisti vaziuokles\n" + e.getPriezastis());
+        } catch (LaikinaKlaida e) {
+            System.out.println("ERROR : nepavyko isskleisti vaziuokles\n" + "Priezastis: " + e.getPriezastis());
+            System.out.println("Svarbumas: Laikina...\n");
+        } catch (SvarbiKlaida e) {
+            System.out.println("ERROR : nepavyko isskleisti vaziuokles\n" + "Priezastis: " + e.getPriezastis());
+            System.out.println("Svarbumas: SVARBU!!!...\n");
+        } catch (VaziuoklesIsskleidimoKlaida e) {
+            System.out.println("ERROR : nepavyko isskleisti vaziuokles\n" + "Priezastis: " + e.getPriezastis());
+            System.out.println("Svarbumas: Nezinoma...\n");
         }
     }
 
     void vaziuokle() throws VaziuoklesIsskleidimoKlaida {
         Random rand = new Random();
-        int x = rand.nextInt(4);
+        int x = rand.nextInt(10);
         switch (x) { // new Random().nextInt(10)
             case 0:
-                throw new VaziuoklesIsskleidimoKlaida("Neatsidare durys");
+                throw new SvarbiKlaida("Neatsidare durys");
             case 1:
-                throw new VaziuoklesIsskleidimoKlaida("Nenusileido ratas");
+                throw new SvarbiKlaida("Nenusileido ratas");
             case 2:
-                throw new VaziuoklesIsskleidimoKlaida("Per didelis aukstis");
+                throw new LaikinaKlaida("Per didelis aukstis");
             case 3:
-                throw new VaziuoklesIsskleidimoKlaida("Sugedo variklis");
+                throw new SvarbiKlaida("Sugedo variklis");
+            case 4:
+                throw new VaziuoklesIsskleidimoKlaida("Nezinoma priezastis");
         }
     }
 }

@@ -2,29 +2,47 @@ package com.company;
 
 import java.util.Random;
 
+class VaziuoklesIsskleidimoKlaida extends Exception {
+    private String priezastis;
+
+    public VaziuoklesIsskleidimoKlaida(String priezastis){
+        this.priezastis = priezastis;
+    }
+
+    public String getPriezastis() {
+        return priezastis;
+    }
+
+    public void setPriezastis(String priezastis) {
+        this.priezastis = priezastis;
+    }
+}
+
 class Lektuvas {
 
-    public void iskeistiVaziuokle()
-    {
-        Random rand = new Random();
-        int skaicius = rand.nextInt(6);
+    public void iskeistiVaziuokle() {
         try {
-            int bandom = 4 / skaicius;
-            if (skaicius == 5)
-            {
-                "skrendu".charAt(20);
-            }
+            vaziuokle();
             System.out.println("OK : važiuoklė sėkmingai išskleista");
-            } catch (ArithmeticException e) { // divided by 0
-            System.out.println("ERROR : nepavyko isskleisti vaziuokles");
-            } catch (StringIndexOutOfBoundsException e){
-            System.out.println("ERROR : nepavyko išskleisti važiuoklės dėl kitos klaidos");
-            } finally {
-            System.out.println("INFO: lektuvas skrenda");
-            System.out.println("\n");
+        } catch (VaziuoklesIsskleidimoKlaida e) { // divided by 0
+            System.out.println("ERROR : nepavyko isskleisti vaziuokles\n" + e.getPriezastis());
         }
     }
 
+    void vaziuokle() throws VaziuoklesIsskleidimoKlaida {
+        Random rand = new Random();
+        int x = rand.nextInt(4);
+        switch (x) { // new Random().nextInt(10)
+            case 0:
+                throw new VaziuoklesIsskleidimoKlaida("Neatsidare durys");
+            case 1:
+                throw new VaziuoklesIsskleidimoKlaida("Nenusileido ratas");
+            case 2:
+                throw new VaziuoklesIsskleidimoKlaida("Per didelis aukstis");
+            case 3:
+                throw new VaziuoklesIsskleidimoKlaida("Sugedo variklis");
+        }
+    }
 }
 
 public class Main {

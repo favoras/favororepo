@@ -7,7 +7,7 @@ class Lektuvas {
     public void iskeistiVaziuokle()
     {
         Random rand = new Random();
-        int skaicius = rand.nextInt(10);
+        int skaicius = rand.nextInt(2);
         try {
             int bandom = 5 / skaicius;
             System.out.println("OK: važiuoklė sėkmingai išskleista - nusileidom");

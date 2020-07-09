@@ -7,12 +7,12 @@ class Lektuvas {
     public void iskeistiVaziuokle()
     {
         Random rand = new Random();
-        int skaicius = rand.nextInt(2);
+        int skaicius = rand.nextInt(6);
         try {
             int bandom = 5 / skaicius;
-            System.out.println("OK: važiuoklė sėkmingai išskleista - nusileidom");
+            System.out.println("OK: važiuoklė sėkmingai išskleista");
             } catch (ArithmeticException e) {
-            System.out.println("ERROR : nepavyko isskleisti vaziuokles - suduzom");
+            System.out.println("ERROR : nepavyko isskleisti vaziuokles");
         }
     }
 

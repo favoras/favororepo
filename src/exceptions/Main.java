@@ -7,71 +7,72 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws DeviceIsOffException {
 
-        Device dev = new Device();
-        dev.ping();
-
-        //     List<Device> devices = new ArrayList<>();
-        //     devices.add(new Mouse(true));
-        //     devices.add(new Display(true));
+        List<Device> devices=new ArrayList<>();
+        devices.add(new Mouse(true));
+        devices.add(new Display(true));
+        devices.add(new Keyboard(true));
+        devices.add(new Mouse(true));
+        devices.add(new Display(true));
+        devices.add(new Keyboard(true));
+        Monitoring.pingAllDevices(devices);
+        devices.get(3).setOn(false);
+        System.out.println();
+        Monitoring.pingAllDevices(devices);
 
     }
 }
 
 class Device {
 
+    private boolean isOn;
+    private static int newId;
+    private int id;
+
+    Device(boolean deviceStatus) {
+        this.id = newId++;
+        this.isOn = deviceStatus;
+    }
 
     public void ping() throws DeviceIsOffException {
-
-        Mouse mouse = new Mouse();
-        Display display = new Display();
-        Keyboard keyboard = new Keyboard();
-
-        mouse.mouseCheck();
-        display.displayCheck();
-        keyboard.keyboardCheck();
-
+        if(!isOn()){
+            throw new DeviceIsOffException("Prietaisas neveikia");
+        }
     }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isOn(){
+        return isOn;
+    }
+
+    public void setOn(boolean on) {
+        isOn = on;
+    }
+
 }
 
 class Mouse extends Device {
 
-    boolean isOn = true;
-
-    public void mouseCheck() throws DeviceIsOffException {
-        if (isOn = true){
-            System.out.println("Mouse working");
-        }
-        else {
-            throw new DeviceIsOffException("Mouse not working");
-        }
+    public Mouse(boolean deviceStatus)
+    {
+        super(deviceStatus);
     }
-
 }
 class Display extends Device {
 
-    boolean isOn = true;
-
-    public void displayCheck() throws DeviceIsOffException {
-        if (isOn = true){
-            System.out.println("Display working");
-        }
-        else {
-            throw new DeviceIsOffException("Display not working");
-        }
+    public Display(boolean deviceStatus)
+    {
+        super(deviceStatus);
     }
-
 }
 class Keyboard extends Device {
 
-    boolean isOn = true;
-
-    public void keyboardCheck() throws DeviceIsOffException {
-        if (isOn = true){
-            System.out.println("Keyboard working");
-        }
-        else {
-            throw new DeviceIsOffException("Keyboard not working");
-        }
+    public Keyboard(boolean deviceStatus)
+    {
+        super(deviceStatus);
     }
 }
 
@@ -86,7 +87,16 @@ class DeviceIsOffException extends Exception {
 
 class Monitoring {
 
-    public void pingAllDevices() {
-
+    public static void pingAllDevices(List<Device> devices) throws DeviceIsOffException {
+        System.out.println("PINGING STARTED: ");
+        for (Device device : devices) {
+            try {
+                device.ping();
+                System.out.println(String.format("DEVICE %s with id %s is ON", device.getClass().getSimpleName(), device.getId()));
+            } catch (DeviceIsOffException e) {
+                System.out.println(String.format("DEVICE %s with id %s is OFF", device.getClass().getSimpleName(), device.getId()));
+            }
+        }
+        System.out.println("PINGING FINISHED!!!");
     }
 }
